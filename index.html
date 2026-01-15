@@ -1,0 +1,1316 @@
+<!doctype html>
+<html lang="pt-BR" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Checklist de Segurança Geotécnica</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&amp;display=swap" rel="stylesheet">
+  <style>
+    body {
+      box-sizing: border-box;
+      font-family: 'Roboto', Arial, sans-serif;
+    }
+    
+    @media print {
+      .no-print { display: none !important; }
+      .print-only { display: block !important; }
+      body { background: white !important; }
+      .document-container { 
+        box-shadow: none !important; 
+        margin: 0 !important;
+        padding: 15mm !important;
+      }
+    }
+    
+    .print-only { display: none; }
+    
+    .checklist-table th,
+    .checklist-table td {
+      border: 1px solid #374151;
+      padding: 6px 8px;
+      text-align: left;
+      font-size: 11px;
+    }
+    
+    .checklist-table th {
+      background-color: #f3f4f6;
+      font-weight: 500;
+    }
+    
+    .signature-line {
+      border-bottom: 1px solid #374151;
+      min-width: 150px;
+      display: inline-block;
+    }
+    
+    .field-box {
+      border: 1px solid #374151;
+      min-height: 24px;
+      padding: 2px 6px;
+      background: white;
+    }
+    
+    .header-cell {
+      border: 1px solid #374151;
+      padding: 4px 8px;
+      font-size: 11px;
+    }
+    
+    .status-conforme { background-color: #dcfce7; }
+    .status-nao-conforme { background-color: #fee2e2; }
+    .status-na { background-color: #f3f4f6; }
+    
+    .btn-option {
+      transition: all 0.2s ease;
+    }
+    
+    .btn-option:hover {
+      transform: translateY(-2px);
+    }
+    
+    .btn-option.selected {
+      ring: 3px;
+      ring-offset: 2px;
+    }
+    
+    .progress-bar {
+      transition: width 0.3s ease;
+    }
+    
+    .fade-in {
+      animation: fadeIn 0.3s ease;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .alert-banner {
+      background: linear-gradient(90deg, #dc2626 0%, #b91c1c 100%);
+    }
+  </style>
+  <style>@view-transition { navigation: auto; }</style>
+ </head>
+ <body class="h-full bg-gray-100 overflow-auto">
+  <div id="app" class="min-h-full w-full"><!-- TELA INICIAL -->
+   <div id="screen-home" class="min-h-full flex flex-col"><!-- Header -->
+    <header class="bg-gray-900 text-white py-4 px-6 no-print">
+     <div class="max-w-4xl mx-auto flex items-center justify-between">
+      <div class="flex items-center gap-3">
+       <svg class="w-10 h-10 text-green-600" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+       </svg>
+       <div>
+        <h1 id="header-title" class="text-lg font-bold">Checklist de Segurança Geotécnica</h1>
+        <p class="text-xs text-gray-400">Sistema de Gestão de Segurança</p>
+       </div>
+      </div><button id="btn-history" class="flex items-center gap-2 bg-gray-800 hover:bg-gray-700 px-4 py-2 rounded-lg text-sm transition-colors">
+       <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+       </svg> Histórico </button>
+     </div>
+    </header><!-- Main Content -->
+    <main class="flex-1 flex items-center justify-center p-6">
+     <div class="max-w-lg w-full text-center">
+      <div class="bg-white rounded-2xl shadow-xl p-8 mb-6">
+       <div class="w-24 h-24 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
+        <svg class="w-12 h-12 text-green-700" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
+        </svg>
+       </div>
+       <h2 class="text-2xl font-bold text-gray-900 mb-2">Checklist de Segurança</h2>
+       <h3 class="text-lg text-gray-600 mb-4">Condição dos Taludes e Bermas</h3>
+       <p class="text-gray-500 text-sm mb-6">Realize a verificação completa das condições de segurança geotécnica antes de iniciar qualquer atividade na frente de trabalho.</p>
+       <div class="bg-gray-50 rounded-lg p-4 mb-6 text-left">
+        <div class="grid grid-cols-2 gap-3 text-sm">
+         <div><span class="text-gray-500">Área:</span> <span id="info-area" class="font-medium text-gray-900 ml-1">Raimundo Mascarenhas</span>
+         </div>
+         <div><span class="text-gray-500">Gerência:</span> <span id="info-gerencia" class="font-medium text-gray-900 ml-1">Investimentos</span>
+         </div>
+         <div><span class="text-gray-500">Frente:</span> <span class="font-medium text-gray-900 ml-1">km9</span>
+         </div>
+         <div><span class="text-gray-500">Empresa:</span> <span class="font-medium text-gray-900 ml-1">Tecnosonda</span>
+         </div>
+        </div>
+       </div><button id="btn-start" class="w-full bg-green-700 hover:bg-green-800 text-white font-semibold py-4 px-6 rounded-xl text-lg transition-colors flex items-center justify-center gap-2">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" /> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg> Iniciar Checklist </button>
+      </div>
+      <p class="text-xs text-gray-500">Versão 1.0 • Sistema de Gestão Integrada de Segurança</p>
+     </div>
+    </main>
+   </div><!-- TELA DE PERGUNTAS -->
+   <div id="screen-questions" class="min-h-full flex flex-col hidden"><!-- Header com progresso -->
+    <header class="bg-gray-900 text-white py-4 px-6 no-print">
+     <div class="max-w-4xl mx-auto">
+      <div class="flex items-center justify-between mb-3"><button id="btn-back-home" class="flex items-center gap-2 text-gray-400 hover:text-white transition-colors">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+        </svg> Voltar </button> <span id="progress-text" class="text-sm text-gray-400">Pergunta 1 de 19</span>
+      </div>
+      <div class="w-full bg-gray-700 rounded-full h-2">
+       <div id="progress-bar" class="progress-bar bg-green-600 h-2 rounded-full" style="width: 5%"></div>
+      </div>
+     </div>
+    </header><!-- Conteúdo da pergunta -->
+    <main class="flex-1 flex items-center justify-center p-6">
+     <div id="question-container" class="max-w-2xl w-full fade-in"><!-- Conteúdo dinâmico -->
+     </div>
+    </main>
+   </div><!-- TELA DO DOCUMENTO FINAL -->
+   <div id="screen-document" class="min-h-full bg-gray-200 hidden"><!-- Header -->
+    <header class="bg-gray-900 text-white py-4 px-6 no-print sticky top-0 z-10">
+     <div class="max-w-4xl mx-auto flex items-center justify-between"><button id="btn-back-questions" class="flex items-center gap-2 text-gray-400 hover:text-white transition-colors">
+       <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+       </svg> Voltar </button>
+      <div class="flex gap-3"><button id="btn-download-pdf" class="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg text-sm transition-colors">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+        </svg> Baixar PDF </button> <button id="btn-print" class="flex items-center gap-2 bg-gray-800 hover:bg-gray-700 px-4 py-2 rounded-lg text-sm transition-colors">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
+        </svg> Imprimir </button> <button id="btn-new" class="flex items-center gap-2 bg-green-700 hover:bg-green-800 px-4 py-2 rounded-lg text-sm transition-colors">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+        </svg> Novo Checklist </button>
+      </div>
+     </div>
+    </header><!-- Alerta de não conformidade -->
+    <div id="alert-nc" class="alert-banner text-white py-3 px-6 no-print hidden">
+     <div class="max-w-4xl mx-auto flex items-center gap-3">
+      <svg class="w-6 h-6 flex-shrink-0" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+      </svg><span class="font-medium">ATENÇÃO: Existem itens Não Conformes. A atividade NÃO deve ser iniciada até a correção das não conformidades identificadas.</span>
+     </div>
+    </div><!-- Documento -->
+    <div class="py-8 px-4">
+     <div id="document-content" class="document-container max-w-4xl mx-auto bg-white shadow-lg" style="width: 210mm; min-height: 297mm; padding: 15mm;"><!-- Conteúdo do documento gerado dinamicamente -->
+     </div>
+    </div>
+   </div><!-- TELA DE HISTÓRICO -->
+   <div id="screen-history" class="min-h-full flex flex-col hidden">
+    <header class="bg-gray-900 text-white py-4 px-6 no-print">
+     <div class="max-w-4xl mx-auto flex items-center justify-between"><button id="btn-back-history" class="flex items-center gap-2 text-gray-400 hover:text-white transition-colors">
+       <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+       </svg> Voltar </button>
+      <h2 class="text-lg font-semibold">Histórico de Checklists</h2>
+      <div class="w-20"></div>
+     </div>
+    </header>
+    <main class="flex-1 p-6">
+     <div class="max-w-4xl mx-auto">
+      <div id="history-list" class="space-y-4"><!-- Lista dinâmica -->
+      </div>
+      <div id="history-empty" class="text-center py-12 hidden">
+       <svg class="w-16 h-16 text-gray-300 mx-auto mb-4" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+       </svg>
+       <p class="text-gray-500">Nenhum checklist registrado ainda.</p>
+      </div>
+     </div>
+    </main>
+   </div><!-- Loading Overlay -->
+   <div id="loading-overlay" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+    <div class="bg-white rounded-xl p-6 flex items-center gap-4">
+     <svg class="animate-spin h-8 w-8 text-green-700" fill="none" viewbox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle> <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+     </svg><span id="loading-text" class="text-gray-700 font-medium">Salvando...</span>
+    </div>
+   </div><!-- Toast Message -->
+   <div id="toast" class="fixed bottom-6 right-6 bg-gray-900 text-white px-6 py-3 rounded-lg shadow-lg transform translate-y-20 opacity-0 transition-all duration-300 z-50"><span id="toast-message"></span>
+   </div>
+  </div>
+  <script>
+    // ============ CONFIGURAÇÃO E ESTADO ============
+    const defaultConfig = {
+      app_title: 'Checklist de Segurança Geotécnica',
+      company_area: 'Raimundo Mascarenhas',
+      management_unit: 'Investimentos',
+      background_color: '#f0f4f0',
+      surface_color: '#ffffff',
+      text_color: '#1a2e1a',
+      primary_color: '#1b5e20',
+      secondary_color: '#2e7d32'
+    };
+    
+    let config = { ...defaultConfig };
+    let allChecklists = [];
+    let currentChecklist = null;
+    let currentStep = 0;
+    let isLoading = false;
+    
+    // Definição das perguntas
+    const questions = [
+      { id: 'om_os_ref', type: 'text', label: 'Nº OM/OS / Referência', placeholder: 'Digite o número de referência' },
+      { id: 'pts_number', type: 'text', label: 'Nº PTS', placeholder: 'Digite o número do PTS' },
+      { id: 'nome_emitente', type: 'text', label: 'Nome do Emitente', placeholder: 'Nome completo do emitente' },
+      { id: 'executante_credenciado', type: 'text', label: 'Executante Credenciado', placeholder: 'Nome do executante credenciado' },
+      { id: 'turno', type: 'turno', label: 'Turno de Trabalho' },
+      { id: 'supervisionado_por', type: 'text', label: 'Supervisionado por', placeholder: 'Nome do supervisor' },
+      { id: 'cargo', type: 'text', label: 'Cargo', placeholder: 'Cargo do responsável' },
+      { id: 'matricula', type: 'text', label: 'Número da Matrícula', placeholder: 'Digite a matrícula' },
+      { id: 'contato', type: 'text', label: 'Contato', placeholder: 'Telefone ou e-mail' },
+      { id: 'atividade', type: 'text', label: 'Atividade a ser Executada', placeholder: 'Descreva a atividade' },
+      { id: 'lider_imediato', type: 'text', label: 'Líder Imediato', placeholder: 'Nome do líder imediato' },
+      { id: 'item_1_1', type: 'check', section: '1. CONDIÇÃO DOS TALUDES E BERMAS', label: '1.1 Trincas na berma e no talude superior' },
+      { id: 'item_1_2', type: 'check', label: '1.2 Abatimento / Recalque de berma' },
+      { id: 'item_1_3', type: 'check', label: '1.3 Bermas com acesso isolado' },
+      { id: 'item_1_4', type: 'check', label: '1.4 Acúmulo de água na berma superior' },
+      { id: 'item_1_5', type: 'check', label: '1.5 Mancha de água / saturação no talude' },
+      { id: 'item_1_6', type: 'check', label: '1.6 Inclinação do talude' },
+      { id: 'item_1_7', type: 'check', label: '1.7 Altura correta do talude' },
+      { id: 'item_1_8', type: 'check', label: '1.8 Risco de queda de blocos' },
+      { id: 'item_1_9', type: 'check', label: '1.9 Deslizamento de material' },
+      { id: 'item_2_1', type: 'check', section: '2. CONDIÇÕES GERAIS', label: '2.1 Aptidão física e mental' },
+      { id: 'item_2_2', type: 'check', label: '2.2 Marcação da atividade' },
+      { id: 'item_2_3', type: 'check', label: '2.3 Equipamento compatível' },
+      { id: 'item_2_4', type: 'check', label: '2.4 Iluminação suficiente' },
+      { id: 'item_2_5', type: 'check', label: '2.5 Condições ambientais adequadas' },
+      { id: 'avaliador_decision', type: 'decision', section: 'DECISÃO FINAL', label: 'Avaliador Responsável', role: 'avaliador' },
+      { id: 'supervisor_decision', type: 'decision', label: 'Supervisor / Encarregado', role: 'supervisor' },
+      { id: 'tecnico_decision', type: 'decision', label: 'Técnico de Segurança', role: 'tecnico' }
+    ];
+    
+    // ============ ELEMENTOS DO DOM ============
+    const screens = {
+      home: document.getElementById('screen-home'),
+      questions: document.getElementById('screen-questions'),
+      document: document.getElementById('screen-document'),
+      history: document.getElementById('screen-history')
+    };
+    
+    const elements = {
+      btnStart: document.getElementById('btn-start'),
+      btnHistory: document.getElementById('btn-history'),
+      btnBackHome: document.getElementById('btn-back-home'),
+      btnBackHistory: document.getElementById('btn-back-history'),
+      btnBackQuestions: document.getElementById('btn-back-questions'),
+      btnDownloadPdf: document.getElementById('btn-download-pdf'),
+      btnPrint: document.getElementById('btn-print'),
+      btnNew: document.getElementById('btn-new'),
+      progressBar: document.getElementById('progress-bar'),
+      progressText: document.getElementById('progress-text'),
+      questionContainer: document.getElementById('question-container'),
+      documentContent: document.getElementById('document-content'),
+      alertNc: document.getElementById('alert-nc'),
+      historyList: document.getElementById('history-list'),
+      historyEmpty: document.getElementById('history-empty'),
+      loadingOverlay: document.getElementById('loading-overlay'),
+      loadingText: document.getElementById('loading-text'),
+      toast: document.getElementById('toast'),
+      toastMessage: document.getElementById('toast-message'),
+      headerTitle: document.getElementById('header-title'),
+      infoArea: document.getElementById('info-area'),
+      infoGerencia: document.getElementById('info-gerencia')
+    };
+    
+    // ============ FUNÇÕES DE UI ============
+    function showScreen(screenName) {
+      Object.values(screens).forEach(s => s.classList.add('hidden'));
+      screens[screenName].classList.remove('hidden');
+    }
+    
+    function showLoading(show, text = 'Salvando...') {
+      isLoading = show;
+      elements.loadingText.textContent = text;
+      elements.loadingOverlay.classList.toggle('hidden', !show);
+    }
+    
+    function showToast(message, duration = 3000) {
+      elements.toastMessage.textContent = message;
+      elements.toast.classList.remove('translate-y-20', 'opacity-0');
+      setTimeout(() => {
+        elements.toast.classList.add('translate-y-20', 'opacity-0');
+      }, duration);
+    }
+    
+    function updateProgress() {
+      const progress = ((currentStep + 1) / questions.length) * 100;
+      elements.progressBar.style.width = `${progress}%`;
+      elements.progressText.textContent = `Pergunta ${currentStep + 1} de ${questions.length}`;
+    }
+    
+    // ============ RENDERIZAÇÃO DE PERGUNTAS ============
+    function renderQuestion() {
+      const q = questions[currentStep];
+      let html = '';
+      
+      // Seção header se existir
+      if (q.section) {
+        html += `
+          <div class="bg-green-700 text-white px-4 py-2 rounded-t-xl mb-0">
+            <h3 class="font-semibold text-sm">${q.section}</h3>
+          </div>
+        `;
+      }
+      
+      html += `<div class="bg-white rounded-${q.section ? 'b' : ''}-xl shadow-xl p-6">`;
+      
+      if (q.type === 'text') {
+        html += `
+          <h2 class="text-xl font-bold text-gray-900 mb-6">${q.label}</h2>
+          <input type="text" id="input-${q.id}" 
+            class="w-full border-2 border-gray-300 rounded-xl px-4 py-4 text-lg focus:border-green-600 focus:outline-none transition-colors"
+            placeholder="${q.placeholder}"
+            value="${currentChecklist[q.id] || ''}">
+          <button onclick="nextQuestion('${q.id}')" 
+            class="mt-6 w-full bg-green-700 hover:bg-green-800 text-white font-semibold py-4 px-6 rounded-xl text-lg transition-colors">
+            Continuar
+          </button>
+        `;
+      } else if (q.type === 'turno') {
+        const currentTurno = currentChecklist[q.id] || '';
+        
+        html += `
+          <h2 class="text-xl font-bold text-gray-900 mb-2">${q.label}</h2>
+          <p class="text-gray-500 text-sm mb-6">Selecione o turno de trabalho</p>
+          
+          <div class="grid grid-cols-2 gap-4 mb-6">
+            <button onclick="selectTurno('${q.id}', 'diurno')" 
+              class="btn-option p-6 rounded-xl border-2 ${currentTurno === 'diurno' ? 'border-yellow-500 bg-yellow-50 ring-2 ring-yellow-500' : 'border-gray-200 hover:border-yellow-400'} transition-all">
+              <div class="w-16 h-16 rounded-full ${currentTurno === 'diurno' ? 'bg-yellow-500' : 'bg-yellow-100'} flex items-center justify-center mx-auto mb-3">
+                <svg class="w-8 h-8 ${currentTurno === 'diurno' ? 'text-white' : 'text-yellow-600'}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/>
+                </svg>
+              </div>
+              <span class="font-semibold text-lg text-gray-900">DIURNO</span>
+            </button>
+            
+            <button onclick="selectTurno('${q.id}', 'noturno')" 
+              class="btn-option p-6 rounded-xl border-2 ${currentTurno === 'noturno' ? 'border-indigo-600 bg-indigo-50 ring-2 ring-indigo-600' : 'border-gray-200 hover:border-indigo-400'} transition-all">
+              <div class="w-16 h-16 rounded-full ${currentTurno === 'noturno' ? 'bg-indigo-600' : 'bg-indigo-100'} flex items-center justify-center mx-auto mb-3">
+                <svg class="w-8 h-8 ${currentTurno === 'noturno' ? 'text-white' : 'text-indigo-700'}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
+                </svg>
+              </div>
+              <span class="font-semibold text-lg text-gray-900">NOTURNO</span>
+            </button>
+          </div>
+          
+          <button id="btn-next-${q.id}" onclick="nextTurnoQuestion('${q.id}')" 
+            class="mt-6 w-full bg-green-700 hover:bg-green-800 text-white font-semibold py-4 px-6 rounded-xl text-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            ${!currentTurno ? 'disabled' : ''}>
+            Continuar
+          </button>
+        `;
+      } else if (q.type === 'check') {
+        const statusKey = `${q.id}_status`;
+        const obsKey = `${q.id}_obs`;
+        const currentStatus = currentChecklist[statusKey] || '';
+        
+        html += `
+          <h2 class="text-xl font-bold text-gray-900 mb-2">${q.label}</h2>
+          <p class="text-gray-500 text-sm mb-6">Selecione a condição observada</p>
+          
+          <div class="grid grid-cols-3 gap-4 mb-6">
+            <button onclick="selectStatus('${q.id}', 'conforme')" 
+              class="btn-option p-4 rounded-xl border-2 ${currentStatus === 'conforme' ? 'border-green-600 bg-green-50 ring-2 ring-green-600' : 'border-gray-200 hover:border-green-400'} transition-all">
+              <div class="w-12 h-12 rounded-full ${currentStatus === 'conforme' ? 'bg-green-600' : 'bg-green-100'} flex items-center justify-center mx-auto mb-2">
+                <svg class="w-6 h-6 ${currentStatus === 'conforme' ? 'text-white' : 'text-green-700'}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                </svg>
+              </div>
+              <span class="font-medium text-gray-900">Conforme</span>
+            </button>
+            
+            <button onclick="selectStatus('${q.id}', 'nao_conforme')" 
+              class="btn-option p-4 rounded-xl border-2 ${currentStatus === 'nao_conforme' ? 'border-red-500 bg-red-50 ring-2 ring-red-500' : 'border-gray-200 hover:border-red-300'} transition-all">
+              <div class="w-12 h-12 rounded-full ${currentStatus === 'nao_conforme' ? 'bg-red-500' : 'bg-red-100'} flex items-center justify-center mx-auto mb-2">
+                <svg class="w-6 h-6 ${currentStatus === 'nao_conforme' ? 'text-white' : 'text-red-600'}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                </svg>
+              </div>
+              <span class="font-medium text-gray-900">Não Conforme</span>
+            </button>
+            
+            <button onclick="selectStatus('${q.id}', 'na')" 
+              class="btn-option p-4 rounded-xl border-2 ${currentStatus === 'na' ? 'border-gray-500 bg-gray-100 ring-2 ring-gray-500' : 'border-gray-200 hover:border-gray-400'} transition-all">
+              <div class="w-12 h-12 rounded-full ${currentStatus === 'na' ? 'bg-gray-500' : 'bg-gray-200'} flex items-center justify-center mx-auto mb-2">
+                <svg class="w-6 h-6 ${currentStatus === 'na' ? 'text-white' : 'text-gray-600'}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4"/>
+                </svg>
+              </div>
+              <span class="font-medium text-gray-900">N/A</span>
+            </button>
+          </div>
+          
+          <div id="obs-container-${q.id}" class="${currentStatus === 'nao_conforme' ? '' : 'hidden'}">
+            <label class="block text-sm font-medium text-gray-700 mb-2">
+              Ações de controle / Observações <span class="text-red-500">*</span>
+            </label>
+            <textarea id="obs-${q.id}" rows="3" 
+              class="w-full border-2 border-gray-300 rounded-xl px-4 py-3 focus:border-green-600 focus:outline-none transition-colors"
+              placeholder="Descreva as ações de controle necessárias...">${currentChecklist[obsKey] || ''}</textarea>
+          </div>
+          
+          <button id="btn-next-${q.id}" onclick="nextCheckQuestion('${q.id}')" 
+            class="mt-6 w-full bg-green-700 hover:bg-green-800 text-white font-semibold py-4 px-6 rounded-xl text-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            ${!currentStatus ? 'disabled' : ''}>
+            Continuar
+          </button>
+        `;
+      } else if (q.type === 'decision') {
+        const currentDecision = currentChecklist[q.id] || '';
+        
+        html += `
+          <h2 class="text-xl font-bold text-gray-900 mb-2">${q.label}</h2>
+          <p class="text-gray-500 text-sm mb-6">Autorização para início da atividade</p>
+          
+          <div class="grid grid-cols-2 gap-4 mb-6">
+            <button onclick="selectDecision('${q.id}', 'iniciar')" 
+              class="btn-option p-6 rounded-xl border-2 ${currentDecision === 'iniciar' ? 'border-green-600 bg-green-50 ring-2 ring-green-600' : 'border-gray-200 hover:border-green-400'} transition-all">
+              <div class="w-16 h-16 rounded-full ${currentDecision === 'iniciar' ? 'bg-green-600' : 'bg-green-100'} flex items-center justify-center mx-auto mb-3">
+                <svg class="w-8 h-8 ${currentDecision === 'iniciar' ? 'text-white' : 'text-green-700'}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/>
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                </svg>
+              </div>
+              <span class="font-semibold text-lg text-gray-900">INICIAR</span>
+            </button>
+            
+            <button onclick="selectDecision('${q.id}', 'nao_iniciar')" 
+              class="btn-option p-6 rounded-xl border-2 ${currentDecision === 'nao_iniciar' ? 'border-red-500 bg-red-50 ring-2 ring-red-500' : 'border-gray-200 hover:border-red-300'} transition-all">
+              <div class="w-16 h-16 rounded-full ${currentDecision === 'nao_iniciar' ? 'bg-red-500' : 'bg-red-100'} flex items-center justify-center mx-auto mb-3">
+                <svg class="w-8 h-8 ${currentDecision === 'nao_iniciar' ? 'text-white' : 'text-red-600'}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 10a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1h-4a1 1 0 01-1-1v-4z"/>
+                </svg>
+              </div>
+              <span class="font-semibold text-lg text-gray-900">NÃO INICIAR</span>
+            </button>
+          </div>
+          
+          <button id="btn-next-${q.id}" onclick="nextDecisionQuestion('${q.id}')" 
+            class="mt-6 w-full bg-green-700 hover:bg-green-800 text-white font-semibold py-4 px-6 rounded-xl text-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            ${!currentDecision ? 'disabled' : ''}>
+            ${currentStep === questions.length - 1 ? 'Finalizar Checklist' : 'Continuar'}
+          </button>
+        `;
+      }
+      
+      html += '</div>';
+      
+      // Botão voltar
+      if (currentStep > 0) {
+        html += `
+          <button onclick="prevQuestion()" class="mt-4 w-full text-gray-500 hover:text-gray-700 font-medium py-2 transition-colors">
+            ← Voltar para pergunta anterior
+          </button>
+        `;
+      }
+      
+      elements.questionContainer.innerHTML = html;
+      elements.questionContainer.classList.add('fade-in');
+    }
+    
+    // ============ HANDLERS DE PERGUNTAS ============
+    function selectTurno(itemId, turno) {
+      currentChecklist[itemId] = turno;
+      const btn = document.getElementById(`btn-next-${itemId}`);
+      btn.disabled = false;
+      renderQuestion();
+    }
+    
+    function nextTurnoQuestion(itemId) {
+      if (!currentChecklist[itemId]) {
+        showToast('Por favor, selecione o turno de trabalho.');
+        return;
+      }
+      
+      if (currentStep < questions.length - 1) {
+        currentStep++;
+        updateProgress();
+        renderQuestion();
+      }
+    }
+    
+    function selectStatus(itemId, status) {
+      const statusKey = `${itemId}_status`;
+      currentChecklist[statusKey] = status;
+      
+      const obsContainer = document.getElementById(`obs-container-${itemId}`);
+      if (status === 'nao_conforme') {
+        obsContainer.classList.remove('hidden');
+      } else {
+        obsContainer.classList.add('hidden');
+      }
+      
+      const btn = document.getElementById(`btn-next-${itemId}`);
+      btn.disabled = false;
+      
+      renderQuestion();
+    }
+    
+    function selectDecision(itemId, decision) {
+      currentChecklist[itemId] = decision;
+      const btn = document.getElementById(`btn-next-${itemId}`);
+      btn.disabled = false;
+      renderQuestion();
+    }
+    
+    function nextQuestion(itemId) {
+      const input = document.getElementById(`input-${itemId}`);
+      currentChecklist[itemId] = input.value;
+      
+      if (currentStep < questions.length - 1) {
+        currentStep++;
+        updateProgress();
+        renderQuestion();
+      }
+    }
+    
+    function nextCheckQuestion(itemId) {
+      const statusKey = `${itemId}_status`;
+      const obsKey = `${itemId}_obs`;
+      
+      if (currentChecklist[statusKey] === 'nao_conforme') {
+        const obsInput = document.getElementById(`obs-${itemId}`);
+        if (!obsInput.value.trim()) {
+          showToast('Por favor, descreva as ações de controle necessárias.');
+          obsInput.focus();
+          return;
+        }
+        currentChecklist[obsKey] = obsInput.value;
+      }
+      
+      if (currentStep < questions.length - 1) {
+        currentStep++;
+        updateProgress();
+        renderQuestion();
+      }
+    }
+    
+    async function nextDecisionQuestion(itemId) {
+      if (!currentChecklist[itemId]) {
+        showToast('Por favor, selecione uma decisão.');
+        return;
+      }
+      
+      if (currentStep === questions.length - 1) {
+        await finishChecklist();
+      } else {
+        currentStep++;
+        updateProgress();
+        renderQuestion();
+      }
+    }
+    
+    function prevQuestion() {
+      if (currentStep > 0) {
+        currentStep--;
+        updateProgress();
+        renderQuestion();
+      }
+    }
+    
+    // ============ FINALIZAÇÃO E DOCUMENTO ============
+    async function finishChecklist() {
+      showLoading(true);
+      
+      currentChecklist.completed = true;
+      currentChecklist.created_at = new Date().toISOString();
+      
+      try {
+        if (currentChecklist.__backendId) {
+          const result = await window.dataSdk.update(currentChecklist);
+          if (!result.isOk) {
+            showToast('Erro ao salvar checklist. Tente novamente.');
+            showLoading(false);
+            return;
+          }
+        } else {
+          const { __backendId, ...dataToCreate } = currentChecklist;
+          const result = await window.dataSdk.create(dataToCreate);
+          if (!result.isOk) {
+            showToast('Erro ao salvar checklist. Tente novamente.');
+            showLoading(false);
+            return;
+          }
+        }
+        
+        showLoading(false);
+        renderDocument();
+        showScreen('document');
+        showToast('Checklist finalizado com sucesso!');
+      } catch (err) {
+        showLoading(false);
+        showToast('Erro ao salvar. Tente novamente.');
+      }
+    }
+    
+    function hasNonConformities() {
+      return questions.some(q => {
+        if (q.type === 'check') {
+          return currentChecklist[`${q.id}_status`] === 'nao_conforme';
+        }
+        return false;
+      });
+    }
+    
+    function renderDocument() {
+      const hasNC = hasNonConformities();
+      elements.alertNc.classList.toggle('hidden', !hasNC);
+      
+      const date = currentChecklist.created_at ? new Date(currentChecklist.created_at) : new Date();
+      const formattedDate = date.toLocaleDateString('pt-BR');
+      const formattedTime = date.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+      const turnoText = currentChecklist.turno === 'diurno' ? 'DIURNO' : currentChecklist.turno === 'noturno' ? 'NOTURNO' : '-';
+      
+      const getStatusClass = (status) => {
+        if (status === 'conforme') return 'status-conforme';
+        if (status === 'nao_conforme') return 'status-nao-conforme';
+        return 'status-na';
+      };
+      
+      const getStatusText = (status) => {
+        if (status === 'conforme') return 'C';
+        if (status === 'nao_conforme') return 'NC';
+        return 'NA';
+      };
+      
+      const getDecisionText = (decision) => {
+        return decision === 'iniciar' ? 'INICIAR' : 'NÃO INICIAR';
+      };
+      
+      let html = `
+        <div style="font-family: 'Roboto', Arial, sans-serif; font-size: 11px; color: #111827;">
+          
+          <!-- TÍTULO PRINCIPAL -->
+          <div style="text-align: center; margin-bottom: 8px; padding: 6px; background: #f3f4f6; border: 1px solid #d1d5db;">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <div style="font-weight: bold; font-size: 13px; color: #1b5e20; text-transform: uppercase; flex: 1;">
+                Percepção de Riscos Geotécnicos em Taludes
+              </div>
+              <div style="font-size: 10px; color: #374151; margin-left: 10px;">
+                PL-SSMA-007 - Anexo - 1 rev.00
+              </div>
+            </div>
+          </div>
+          
+          <!-- CABEÇALHO -->
+          <table style="width: 100%; border-collapse: collapse; margin-bottom: 10px;">
+            <tr>
+              <td class="header-cell" style="width: 80%; text-align: center;">
+                <div style="font-weight: bold; font-size: 14px;">CHECKLIST DE SEGURANÇA</div>
+                <div style="font-size: 12px;">Condição dos Taludes e Bermas</div>
+              </td>
+              <td class="header-cell" style="width: 20%; text-align: center;">
+                <div style="font-weight: bold; font-size: 12px;">TECNOSONDA</div>
+              </td>
+            </tr>
+          </table>
+          
+          <!-- INFORMAÇÕES GERAIS -->
+          <table style="width: 100%; border-collapse: collapse; margin-bottom: 10px;">
+            <tr>
+              <td class="header-cell" style="width: 15%; background: #f3f4f6; font-weight: 500;">Área:</td>
+              <td class="header-cell" style="width: 35%;">${config.company_area}</td>
+              <td class="header-cell" style="width: 20%; background: #f3f4f6; font-weight: 500;">Gerência Emitente:</td>
+              <td class="header-cell" style="width: 30%;">${config.management_unit}</td>
+            </tr>
+            <tr>
+              <td class="header-cell" style="background: #f3f4f6; font-weight: 500;">Nº OM/OS:</td>
+              <td class="header-cell">${currentChecklist.om_os_ref || '-'}</td>
+              <td class="header-cell" style="background: #f3f4f6; font-weight: 500;">Nº PTS:</td>
+              <td class="header-cell">${currentChecklist.pts_number || '-'}</td>
+            </tr>
+            <tr>
+              <td class="header-cell" style="background: #f3f4f6; font-weight: 500;">Nome do Emitente:</td>
+              <td class="header-cell" colspan="3">${currentChecklist.nome_emitente || '-'}</td>
+            </tr>
+            <tr>
+              <td class="header-cell" style="background: #f3f4f6; font-weight: 500;">Assinatura Emitente:</td>
+              <td class="header-cell" colspan="3" style="padding-top: 20px;">
+                _____________________________________________
+                <div style="font-size: 9px; color: #6b7280; margin-top: 4px;">Data: ${formattedDate} - Hora: ${formattedTime}</div>
+              </td>
+            </tr>
+            <tr>
+              <td class="header-cell" style="background: #f3f4f6; font-weight: 500;">Executante Credenciado:</td>
+              <td class="header-cell" colspan="3">${currentChecklist.executante_credenciado || '-'}</td>
+            </tr>
+            <tr>
+              <td class="header-cell" style="background: #f3f4f6; font-weight: 500;">Assinatura Executante:</td>
+              <td class="header-cell" colspan="3" style="padding-top: 20px;">
+                _____________________________________________
+                <div style="font-size: 9px; color: #6b7280; margin-top: 4px;">Data: ${formattedDate} - Hora: ${formattedTime}</div>
+              </td>
+            </tr>
+          </table>
+          
+          <!-- RESPONSÁVEL PELA EXECUÇÃO DA ATIVIDADE -->
+          <table style="width: 100%; border-collapse: collapse; margin-bottom: 10px;">
+            <tr>
+              <td colspan="4" class="header-cell" style="background: #1b5e20; color: white; font-weight: 600; text-align: center; font-size: 12px;">
+                RESPONSÁVEL PELA EXECUÇÃO DA ATIVIDADE
+              </td>
+            </tr>
+            <tr>
+              <td class="header-cell" style="width: 15%; background: #f3f4f6; font-weight: 500;">Supervisionado por:</td>
+              <td class="header-cell" style="width: 35%;">${currentChecklist.supervisionado_por || '-'}</td>
+              <td class="header-cell" style="width: 20%; background: #f3f4f6; font-weight: 500;">Empresa:</td>
+              <td class="header-cell" style="width: 30%;">Tecnosonda</td>
+            </tr>
+            <tr>
+              <td class="header-cell" style="background: #f3f4f6; font-weight: 500;">Cargo:</td>
+              <td class="header-cell">${currentChecklist.cargo || '-'}</td>
+              <td class="header-cell" style="background: #f3f4f6; font-weight: 500;">Número da Matrícula:</td>
+              <td class="header-cell">${currentChecklist.matricula || '-'}</td>
+            </tr>
+          </table>
+          
+          <!-- INFORMAÇÕES DA ATIVIDADE -->
+          <table style="width: 100%; border-collapse: collapse; margin-bottom: 10px;">
+            <tr>
+              <td colspan="4" class="header-cell" style="background: #f3f4f6; font-weight: 500; text-align: center; font-size: 9px; padding: 6px 8px; line-height: 1.3;">
+                Público-alvo: Engenheiros, Geólogos, Geotécnicos, Técnicos, Operadores e Auxiliares da Tecnosonda e contratadas, envolvidos em atividades em taludes
+              </td>
+            </tr>
+            <tr>
+              <td class="header-cell" style="width: 15%; background: #f3f4f6; font-weight: 500;">Data:</td>
+              <td class="header-cell" style="width: 35%;">${formattedDate}</td>
+              <td class="header-cell" style="width: 20%; background: #f3f4f6; font-weight: 500;">Hora:</td>
+              <td class="header-cell" style="width: 30%;">${formattedTime}</td>
+            </tr>
+            <tr>
+              <td class="header-cell" style="background: #f3f4f6; font-weight: 500;">Líder Imediato:</td>
+              <td class="header-cell">${currentChecklist.lider_imediato || '-'}</td>
+              <td class="header-cell" style="background: #f3f4f6; font-weight: 500;">Turno:</td>
+              <td class="header-cell">${turnoText}</td>
+            </tr>
+            <tr>
+              <td class="header-cell" style="background: #f3f4f6; font-weight: 500;">Frente de Trabalho:</td>
+              <td class="header-cell">km9</td>
+              <td class="header-cell" style="background: #f3f4f6; font-weight: 500;">Local:</td>
+              <td class="header-cell">Raimundo Mascarenhas</td>
+            </tr>
+            <tr>
+              <td class="header-cell" style="background: #f3f4f6; font-weight: 500;">Atividade:</td>
+              <td class="header-cell" colspan="3">${currentChecklist.atividade || '-'}</td>
+            </tr>
+            <tr>
+              <td class="header-cell" style="background: #f3f4f6; font-weight: 500;">Contato:</td>
+              <td class="header-cell" colspan="3">${currentChecklist.contato || '-'}</td>
+            </tr>
+          </table>
+          
+          ${hasNC ? `
+          <div style="background: #fee2e2; border: 2px solid #dc2626; padding: 8px; margin-bottom: 10px; text-align: center;">
+            <strong style="color: #dc2626;">⚠️ ATENÇÃO: EXISTEM ITENS NÃO CONFORMES - ATIVIDADE NÃO DEVE SER INICIADA</strong>
+          </div>
+          ` : ''}
+          
+          <!-- CHECKLIST TALUDES E BERMAS -->
+          <table class="checklist-table" style="width: 100%; border-collapse: collapse; margin-bottom: 10px;">
+            <thead>
+              <tr>
+                <th colspan="4" style="background: #1b5e20; color: white; text-align: left;">1. CONDIÇÃO DOS TALUDES E BERMAS</th>
+              </tr>
+              <tr>
+                <th style="width: 50%;">Item</th>
+                <th style="width: 10%; text-align: center;">C</th>
+                <th style="width: 10%; text-align: center;">NC</th>
+                <th style="width: 10%; text-align: center;">NA</th>
+              </tr>
+            </thead>
+            <tbody>
+      `;
+      
+      // Itens seção 1
+      const section1Items = [
+        { id: 'item_1_1', label: '1.1 Trincas na berma e no talude superior' },
+        { id: 'item_1_2', label: '1.2 Abatimento / Recalque de berma' },
+        { id: 'item_1_3', label: '1.3 Bermas com acesso isolado' },
+        { id: 'item_1_4', label: '1.4 Acúmulo de água na berma superior' },
+        { id: 'item_1_5', label: '1.5 Mancha de água / saturação no talude' },
+        { id: 'item_1_6', label: '1.6 Inclinação do talude' },
+        { id: 'item_1_7', label: '1.7 Altura correta do talude' },
+        { id: 'item_1_8', label: '1.8 Risco de queda de blocos' },
+        { id: 'item_1_9', label: '1.9 Deslizamento de material' }
+      ];
+      
+      section1Items.forEach(item => {
+        const status = currentChecklist[`${item.id}_status`] || '';
+        const obs = currentChecklist[`${item.id}_obs`] || '';
+        const rowClass = status === 'nao_conforme' ? 'status-nao-conforme' : '';
+        
+        html += `
+          <tr class="${rowClass}">
+            <td>${item.label}</td>
+            <td style="text-align: center;">${status === 'conforme' ? '✓' : ''}</td>
+            <td style="text-align: center;">${status === 'nao_conforme' ? '✗' : ''}</td>
+            <td style="text-align: center;">${status === 'na' ? '-' : ''}</td>
+          </tr>
+        `;
+        
+        if (status === 'nao_conforme' && obs) {
+          html += `
+            <tr class="status-nao-conforme">
+              <td colspan="4" style="font-style: italic; padding-left: 20px;">
+                <strong>Ações de controle:</strong> ${obs}
+              </td>
+            </tr>
+          `;
+        }
+      });
+      
+      html += `
+            </tbody>
+          </table>
+          
+          <!-- CHECKLIST CONDIÇÕES GERAIS -->
+          <table class="checklist-table" style="width: 100%; border-collapse: collapse; margin-bottom: 10px;">
+            <thead>
+              <tr>
+                <th colspan="4" style="background: #1b5e20; color: white; text-align: left;">2. CONDIÇÕES GERAIS</th>
+              </tr>
+              <tr>
+                <th style="width: 50%;">Item</th>
+                <th style="width: 10%; text-align: center;">C</th>
+                <th style="width: 10%; text-align: center;">NC</th>
+                <th style="width: 10%; text-align: center;">NA</th>
+              </tr>
+            </thead>
+            <tbody>
+      `;
+      
+      // Itens seção 2
+      const section2Items = [
+        { id: 'item_2_1', label: '2.1 Aptidão física e mental' },
+        { id: 'item_2_2', label: '2.2 Marcação da atividade' },
+        { id: 'item_2_3', label: '2.3 Equipamento compatível' },
+        { id: 'item_2_4', label: '2.4 Iluminação suficiente' },
+        { id: 'item_2_5', label: '2.5 Condições ambientais adequadas' }
+      ];
+      
+      section2Items.forEach(item => {
+        const status = currentChecklist[`${item.id}_status`] || '';
+        const obs = currentChecklist[`${item.id}_obs`] || '';
+        const rowClass = status === 'nao_conforme' ? 'status-nao-conforme' : '';
+        
+        html += `
+          <tr class="${rowClass}">
+            <td>${item.label}</td>
+            <td style="text-align: center;">${status === 'conforme' ? '✓' : ''}</td>
+            <td style="text-align: center;">${status === 'nao_conforme' ? '✗' : ''}</td>
+            <td style="text-align: center;">${status === 'na' ? '-' : ''}</td>
+          </tr>
+        `;
+        
+        if (status === 'nao_conforme' && obs) {
+          html += `
+            <tr class="status-nao-conforme">
+              <td colspan="4" style="font-style: italic; padding-left: 20px;">
+                <strong>Ações de controle:</strong> ${obs}
+              </td>
+            </tr>
+          `;
+        }
+      });
+      
+      html += `
+            </tbody>
+          </table>
+          
+          <!-- DECISÃO FINAL -->
+          <table class="checklist-table" style="width: 100%; border-collapse: collapse; margin-bottom: 10px;">
+            <thead>
+              <tr>
+                <th colspan="3" style="background: #1b5e20; color: white; text-align: left;">DECISÃO FINAL</th>
+              </tr>
+              <tr>
+                <th style="width: 40%;">Responsável</th>
+                <th style="width: 30%; text-align: center;">Decisão</th>
+                <th style="width: 30%; text-align: center;">Assinatura</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td colspan="3" style="font-size: 10px; padding: 8px; background: #f9fafb; font-style: italic;">
+                  <strong>Avaliador Responsável:</strong> Declaro que todas as informações repassadas para este checklist durante as atividades são verdadeiras.
+                </td>
+              </tr>
+              <tr>
+                <td>Avaliador Responsável</td>
+                <td style="text-align: center; font-weight: bold; ${currentChecklist.avaliador_decision === 'nao_iniciar' ? 'color: #dc2626;' : 'color: #1b5e20;'}">
+                  ${getDecisionText(currentChecklist.avaliador_decision)}
+                </td>
+                <td style="text-align: center;">
+                  <div style="padding-top: 30px;">_________________________</div>
+                  <div style="font-size: 9px; color: #6b7280; margin-top: 4px;">Data: ${formattedDate}</div>
+                </td>
+              </tr>
+              <tr>
+                <td colspan="3" style="font-size: 10px; padding: 8px; background: #f9fafb; font-style: italic;">
+                  <strong>Supervisor / Encarregado:</strong> Declaro que as ações de controle necessárias e indicadas acima foram efetivadas.
+                </td>
+              </tr>
+              <tr>
+                <td>Supervisor / Encarregado</td>
+                <td style="text-align: center; font-weight: bold; ${currentChecklist.supervisor_decision === 'nao_iniciar' ? 'color: #dc2626;' : 'color: #1b5e20;'}">
+                  ${getDecisionText(currentChecklist.supervisor_decision)}
+                </td>
+                <td style="text-align: center;">
+                  <div style="padding-top: 30px;">_________________________</div>
+                  <div style="font-size: 9px; color: #6b7280; margin-top: 4px;">Data: ${formattedDate}</div>
+                </td>
+              </tr>
+              <tr>
+                <td colspan="3" style="font-size: 10px; padding: 8px; background: #f9fafb; font-style: italic;">
+                  <strong>Técnico de Segurança:</strong> Declaro que as ações de controle necessárias e indicadas acima foram efetivadas.
+                </td>
+              </tr>
+              <tr>
+                <td>Técnico de Segurança</td>
+                <td style="text-align: center; font-weight: bold; ${currentChecklist.tecnico_decision === 'nao_iniciar' ? 'color: #dc2626;' : 'color: #1b5e20;'}">
+                  ${getDecisionText(currentChecklist.tecnico_decision)}
+                </td>
+                <td style="text-align: center;">
+                  <div style="padding-top: 30px;">_________________________</div>
+                  <div style="font-size: 9px; color: #6b7280; margin-top: 4px;">Data: ${formattedDate}</div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          
+          <!-- LEGENDA -->
+          <div style="margin-top: 15px; padding: 8px; background: #f9fafb; border: 1px solid #e5e7eb;">
+            <div style="font-weight: 500; margin-bottom: 5px;">Legenda:</div>
+            <div style="display: flex; gap: 20px; font-size: 10px;">
+              <span><strong>C</strong> = Conforme</span>
+              <span><strong>NC</strong> = Não Conforme</span>
+              <span><strong>NA</strong> = Não Aplicável</span>
+            </div>
+          </div>
+          
+          <!-- RODAPÉ -->
+          <div style="margin-top: 20px; padding-top: 10px; border-top: 1px solid #e5e7eb; font-size: 9px; color: #6b7280; text-align: center;">
+            Documento gerado automaticamente pelo Sistema de Gestão de Segurança Geotécnica<br>
+            ${formattedDate} às ${formattedTime}
+          </div>
+          
+        </div>
+      `;
+      
+      elements.documentContent.innerHTML = html;
+    }
+    
+    // ============ HISTÓRICO ============
+    function renderHistory() {
+      const completedChecklists = allChecklists.filter(c => c.completed);
+      
+      if (completedChecklists.length === 0) {
+        elements.historyList.innerHTML = '';
+        elements.historyEmpty.classList.remove('hidden');
+        return;
+      }
+      
+      elements.historyEmpty.classList.add('hidden');
+      
+      const html = completedChecklists.map(checklist => {
+        const date = new Date(checklist.created_at);
+        const hasNC = questions.some(q => {
+          if (q.type === 'check') {
+            return checklist[`${q.id}_status`] === 'nao_conforme';
+          }
+          return false;
+        });
+        
+        return `
+          <div class="bg-white rounded-xl shadow-md p-4 hover:shadow-lg transition-shadow cursor-pointer" onclick="viewChecklist('${checklist.__backendId}')">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-4">
+                <div class="w-12 h-12 rounded-full ${hasNC ? 'bg-red-100' : 'bg-green-100'} flex items-center justify-center">
+                  <svg class="w-6 h-6 ${hasNC ? 'text-red-600' : 'text-green-700'}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    ${hasNC ? 
+                      '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>' :
+                      '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>'
+                    }
+                  </svg>
+                </div>
+                <div>
+                  <div class="font-semibold text-gray-900">
+                    ${checklist.om_os_ref ? `OM/OS: ${checklist.om_os_ref}` : 'Checklist'}
+                    ${checklist.pts_number ? ` • PTS: ${checklist.pts_number}` : ''}
+                  </div>
+                  <div class="text-sm text-gray-500">
+                    ${date.toLocaleDateString('pt-BR')} às ${date.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })}
+                  </div>
+                </div>
+              </div>
+              <div class="flex items-center gap-2">
+                ${hasNC ? '<span class="px-3 py-1 bg-red-100 text-red-700 rounded-full text-xs font-medium">NC</span>' : '<span class="px-3 py-1 bg-green-100 text-green-800 rounded-full text-xs font-medium">OK</span>'}
+                <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                </svg>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+      
+      elements.historyList.innerHTML = html;
+    }
+    
+    function viewChecklist(backendId) {
+      const checklist = allChecklists.find(c => c.__backendId === backendId);
+      if (checklist) {
+        currentChecklist = { ...checklist };
+        renderDocument();
+        showScreen('document');
+      }
+    }
+    
+    // ============ INICIALIZAÇÃO ============
+    function startNewChecklist() {
+      currentChecklist = {
+        om_os_ref: '',
+        pts_number: '',
+        nome_emitente: '',
+        executante_credenciado: '',
+        turno: '',
+        supervisionado_por: '',
+        cargo: '',
+        matricula: '',
+        contato: '',
+        atividade: '',
+        lider_imediato: '',
+        avaliador_decision: '',
+        supervisor_decision: '',
+        tecnico_decision: '',
+        completed: false
+      };
+      
+      questions.forEach(q => {
+        if (q.type === 'check') {
+          currentChecklist[`${q.id}_status`] = '';
+          currentChecklist[`${q.id}_obs`] = '';
+        }
+      });
+      
+      currentStep = 0;
+      updateProgress();
+      renderQuestion();
+      showScreen('questions');
+    }
+    
+    // Event Listeners
+    elements.btnStart.addEventListener('click', () => {
+      if (allChecklists.length >= 999) {
+        showToast('Limite de 999 checklists atingido. Exclua alguns registros.');
+        return;
+      }
+      startNewChecklist();
+    });
+    
+    elements.btnHistory.addEventListener('click', () => {
+      renderHistory();
+      showScreen('history');
+    });
+    
+    elements.btnBackHome.addEventListener('click', () => showScreen('home'));
+    elements.btnBackHistory.addEventListener('click', () => showScreen('home'));
+    elements.btnBackQuestions.addEventListener('click', () => {
+      showScreen('questions');
+    });
+    
+    // BOTÃO IMPRIMIR - Abre janela de impressão real
+    elements.btnPrint.addEventListener('click', () => {
+      showToast('Abrindo impressão...', 1500);
+      setTimeout(() => {
+        window.print();
+      }, 300);
+    });
+    
+    // BOTÃO BAIXAR PDF - Download real no computador
+    elements.btnDownloadPdf.addEventListener('click', async () => {
+      try {
+        showLoading(true, 'Gerando PDF...');
+        
+        const date = currentChecklist.created_at ? new Date(currentChecklist.created_at) : new Date();
+        const dateStr = date.toISOString().split('T')[0];
+        const timeStr = date.toTimeString().slice(0,5).replace(':','h');
+        const omOs = (currentChecklist.om_os_ref || 'sem-ref').replace(/[^a-zA-Z0-9]/g, '_');
+        const filename = `Checklist_${omOs}_${dateStr}_${timeStr}.pdf`;
+        
+        const element = elements.documentContent;
+        
+        // Captura o HTML como imagem
+        const canvas = await window.html2canvas(element, {
+          scale: 2,
+          useCORS: true,
+          allowTaint: true,
+          logging: false,
+          backgroundColor: '#ffffff',
+          windowWidth: element.scrollWidth,
+          windowHeight: element.scrollHeight
+        });
+        
+        const imgData = canvas.toDataURL('image/png');
+        
+        // Cria PDF
+        const { jsPDF } = window.jspdf;
+        const pdf = new jsPDF({
+          orientation: 'portrait',
+          unit: 'mm',
+          format: 'a4',
+          compress: true
+        });
+        
+        const pdfWidth = 210;
+        const pdfHeight = 297;
+        const imgWidth = pdfWidth;
+        const imgHeight = (canvas.height * pdfWidth) / canvas.width;
+        
+        let heightLeft = imgHeight;
+        let position = 0;
+        
+        pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight, undefined, 'FAST');
+        heightLeft -= pdfHeight;
+        
+        while (heightLeft > 0) {
+          position = heightLeft - imgHeight;
+          pdf.addPage();
+          pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight, undefined, 'FAST');
+          heightLeft -= pdfHeight;
+        }
+        
+        // Força o download criando um link temporário
+        const pdfBlob = pdf.output('blob');
+        const url = URL.createObjectURL(pdfBlob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = filename;
+        link.style.display = 'none';
+        document.body.appendChild(link);
+        link.click();
+        
+        // Limpa
+        setTimeout(() => {
+          document.body.removeChild(link);
+          URL.revokeObjectURL(url);
+        }, 100);
+        
+        showLoading(false);
+        showToast('✓ PDF baixado! Verifique sua pasta Downloads', 3000);
+        
+      } catch (error) {
+        showLoading(false);
+        showToast('Erro ao gerar PDF: ' + error.message);
+        console.error('Erro completo:', error);
+      }
+    });
+    
+    elements.btnNew.addEventListener('click', () => {
+      if (allChecklists.length >= 999) {
+        showToast('Limite de 999 checklists atingido. Exclua alguns registros.');
+        return;
+      }
+      startNewChecklist();
+    });
+    
+    // ============ SDK INITIALIZATION ============
+    const dataHandler = {
+      onDataChanged(data) {
+        allChecklists = data || [];
+        if (screens.history && !screens.history.classList.contains('hidden')) {
+          renderHistory();
+        }
+      }
+    };
+    
+    async function onConfigChange(cfg) {
+      config = { ...defaultConfig, ...cfg };
+      
+      if (elements.headerTitle) {
+        elements.headerTitle.textContent = config.app_title || defaultConfig.app_title;
+      }
+      if (elements.infoArea) {
+        elements.infoArea.textContent = config.company_area || defaultConfig.company_area;
+      }
+      if (elements.infoGerencia) {
+        elements.infoGerencia.textContent = config.management_unit || defaultConfig.management_unit;
+      }
+      
+      document.body.style.backgroundColor = config.background_color;
+    }
+    
+    function mapToCapabilities(cfg) {
+      return {
+        recolorables: [
+          {
+            get: () => cfg.background_color || defaultConfig.background_color,
+            set: (v) => { cfg.background_color = v; window.elementSdk.setConfig({ background_color: v }); }
+          },
+          {
+            get: () => cfg.surface_color || defaultConfig.surface_color,
+            set: (v) => { cfg.surface_color = v; window.elementSdk.setConfig({ surface_color: v }); }
+          },
+          {
+            get: () => cfg.text_color || defaultConfig.text_color,
+            set: (v) => { cfg.text_color = v; window.elementSdk.setConfig({ text_color: v }); }
+          },
+          {
+            get: () => cfg.primary_color || defaultConfig.primary_color,
+            set: (v) => { cfg.primary_color = v; window.elementSdk.setConfig({ primary_color: v }); }
+          },
+          {
+            get: () => cfg.secondary_color || defaultConfig.secondary_color,
+            set: (v) => { cfg.secondary_color = v; window.elementSdk.setConfig({ secondary_color: v }); }
+          }
+        ],
+        borderables: [],
+        fontEditable: undefined,
+        fontSizeable: undefined
+      };
+    }
+    
+    function mapToEditPanelValues(cfg) {
+      return new Map([
+        ['app_title', cfg.app_title || defaultConfig.app_title],
+        ['company_area', cfg.company_area || defaultConfig.company_area],
+        ['management_unit', cfg.management_unit || defaultConfig.management_unit]
+      ]);
+    }
+    
+    // Initialize SDKs
+    (async function init() {
+      if (window.elementSdk) {
+        await window.elementSdk.init({
+          defaultConfig,
+          onConfigChange,
+          mapToCapabilities,
+          mapToEditPanelValues
+        });
+      }
+      
+      if (window.dataSdk) {
+        const result = await window.dataSdk.init(dataHandler);
+        if (!result.isOk) {
+          console.error('Failed to initialize Data SDK');
+        }
+      } else {
+        // Simulação do Data SDK para funcionamento local (LocalStorage)
+        console.log('Rodando localmente: Simulando banco de dados.');
+        window.dataSdk = {
+          create: async (item) => {
+            const data = JSON.parse(localStorage.getItem('local_checklists') || '[]');
+            item.__backendId = Date.now().toString();
+            data.push(item);
+            localStorage.setItem('local_checklists', JSON.stringify(data));
+            dataHandler.onDataChanged(data);
+            return { isOk: true };
+          },
+          update: async (item) => {
+            const data = JSON.parse(localStorage.getItem('local_checklists') || '[]');
+            const index = data.findIndex(i => i.__backendId === item.__backendId);
+            if (index !== -1) {
+              data[index] = item;
+              localStorage.setItem('local_checklists', JSON.stringify(data));
+              dataHandler.onDataChanged(data);
+              return { isOk: true };
+            }
+            return { isOk: false };
+          }
+        };
+        // Carrega dados salvos anteriormente no navegador
+        dataHandler.onDataChanged(JSON.parse(localStorage.getItem('local_checklists') || '[]'));
+      }
+    })();
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9bd9e59b338f00e4',t:'MTc2ODM1OTc3MS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
